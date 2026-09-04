@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "objects": {
+    "app:grant": {
+      "guid": "685a33b561668bdb7ccd021184381ceb",
+      "canonical": "grant",
+      "canonical_source": "code"
+    },
+    "dbo:applications": {
+      "guid": "6ee4e93583ac8e033dfa1d76c28eeec5"
+    },
+    "dbo:grant_programs": {
+      "guid": "2262d038069de599d0114a884e008434"
+    },
+    "dbo:review_assignments": {
+      "guid": "d5f1a7c325afe84749921e28167b6f39"
+    },
+    "dbo:review_criteria": {
+      "guid": "3bc170989edea902811543e6ee67631c"
+    },
+    "dbo:review_events": {
+      "guid": "07fa1fe2a6f27f0c80f97e51e462f0a3"
+    },
+    "dbo:scores": {
+      "guid": "dcc8c87b631680ec063274806368149a"
+    },
+    "dbo:users": {
+      "guid": "157d4a98d979cf04b9ccdb98dfc15229"
+    },
+    "query:grant|GET|applications/detail/{application_id}": {
+      "guid": "872459208236769a02d379e916a90d71"
+    },
+    "query:grant|GET|applications/queue": {
+      "guid": "f769b876421c1f2f738ccfcf7b6665bf"
+    },
+    "query:grant|GET|criteria/list": {
+      "guid": "42f08489c998b96ac3e56c1130b5f781"
+    },
+    "query:grant|GET|programs/list": {
+      "guid": "755c090fcd6d2557186e2d5b056fb49e"
+    },
+    "query:grant|GET|users/reviewers": {
+      "guid": "fee59d3f52bd930d3ceff8fb1c516882"
+    },
+    "query:grant|POST|applications/assign": {
+      "guid": "10e7e9bf9e638278e0f28e5f97e2c017"
+    },
+    "query:grant|POST|applications/compute-score": {
+      "guid": "073e6db31b4765800de1f4e580b16903"
+    },
+    "query:grant|POST|applications/decide": {
+      "guid": "a3f2f92db9331f82ef56cf4027f313a5"
+    },
+    "query:grant|POST|applications/submit": {
+      "guid": "68827ceb126bdf2af8336db12a422d43"
+    },
+    "query:grant|POST|auth/login": {
+      "guid": "1c73896bbb83297ee957219d140f0e43"
+    },
+    "query:grant|POST|auth/signup": {
+      "guid": "199dac341fb96a92c0730d2f02e4c911"
+    },
+    "query:grant|POST|scores/record": {
+      "guid": "e25da800d2d346dd17240a8255055e32"
+    },
+    "query:grant|POST|seed/run": {
+      "guid": "23651f85c231330d72264c9620ab0c9b"
+    }
+  }
+}

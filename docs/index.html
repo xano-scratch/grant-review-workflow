@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grant Review Workflow · a governed Xano backend</title>
+    <meta
+      name="description"
+      content="A governed backend for a public grant program: intake validation, API-layer RBAC, a versioned scoring rubric, and an audit trail. A Xano Pilot-to-Production proof for government."
+    />
+    <style>
+      :root {
+        --bg: #0a0a0b;
+        --panel: #141416;
+        --panel-2: #1b1b1e;
+        --border: #2a2a2e;
+        --fg: #f4f4f5;
+        --muted: #a1a1aa;
+        --primary: #f4f4f5;
+        --accent: #34d399;
+        --accent-dim: rgba(52, 211, 153, 0.14);
+        --radius: 14px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; }
+      .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+      header { padding: 72px 0 8px; }
+      .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+      .badge {
+        font-size: 12px; font-weight: 600; letter-spacing: 0.01em;
+        padding: 4px 11px; border-radius: 999px;
+        background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .badge.neutral { background: var(--panel-2); color: var(--muted); border-color: var(--border); }
+      h1 { font-size: 44px; line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 14px; }
+      .tagline { font-size: 19px; color: var(--muted); max-width: 640px; margin: 0 0 18px; }
+      .meta { font-size: 14px; color: var(--muted); margin: 0 0 26px; }
+      .meta strong { color: var(--fg); font-weight: 600; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-size: 15px; font-weight: 600; text-decoration: none;
+        padding: 11px 20px; border-radius: 10px; border: 1px solid transparent;
+        transition: transform 0.05s ease, background 0.15s ease, border-color 0.15s ease;
+      }
+      .btn:active { transform: translateY(1px); }
+      .btn.primary { background: var(--primary); color: #0a0a0b; }
+      .btn.primary:hover { background: #ffffff; }
+      .btn.ghost { background: transparent; color: var(--fg); border-color: var(--border); }
+      .btn.ghost:hover { border-color: #3f3f46; background: var(--panel); }
+      section { padding: 34px 0; border-top: 1px solid var(--border); }
+      h2 { font-size: 24px; letter-spacing: -0.01em; margin: 0 0 6px; }
+      .lead { color: var(--muted); margin: 0 0 22px; max-width: 680px; }
+      .shot {
+        border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+        background: var(--panel); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      }
+      .shot img { display: block; width: 100%; height: auto; }
+      .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+      .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+      .card h3 { margin: 0 0 6px; font-size: 16px; }
+      .card p { margin: 0; color: var(--muted); font-size: 14px; }
+      table { width: 100%; border-collapse: collapse; font-size: 14px; }
+      th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+      th { color: var(--muted); font-weight: 600; }
+      td code, .verb { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+      .verb { color: var(--accent); font-weight: 700; }
+      .use pre {
+        background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px;
+        padding: 16px; overflow-x: auto; color: #e4e4e7; font-size: 13.5px; line-height: 1.55;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap;
+      }
+      .note { color: var(--muted); font-size: 13.5px; }
+      footer { padding: 40px 0 64px; color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--border); }
+      @media (max-width: 640px) { h1 { font-size: 34px; } header { padding: 48px 0 8px; } }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="badges">
+          <span class="badge">Play 3 · Pilot to Production</span>
+          <span class="badge neutral">Government</span>
+          <span class="badge neutral">XanoTS</span>
+        </div>
+        <h1>Grant Review Workflow</h1>
+        <p class="tagline">
+          A governed backend for a public grant program. Applications are validated on intake, assigned to
+          reviewers, scored against a published versioned rubric, and written to an audit trail.
+        </p>
+        <p class="meta"><strong>7 tables</strong> · <strong>13 endpoints</strong> · <strong>1 pinned API group</strong> · API-layer RBAC, no row-level security</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="https://github.com/xano-scratch/grant-review-workflow">View on GitHub</a>
+          <a class="btn ghost" href="#use">Use this template</a>
+        </div>
+      </header>
+
+      <section>
+        <h2>The governed result</h2>
+        <p class="lead">
+          An admin views a funded application: the published rubric, the weighted total the API computed
+          (the sum of weight times points), and the audit trail behind it. No client can fake the score.
+        </p>
+        <div class="shot">
+          <img src="screenshot.png" alt="A funded application showing the weighted total of 63, the published rubric, and the administration controls" />
+        </div>
+      </section>
+
+      <section>
+        <h2>What it demonstrates</h2>
+        <p class="lead">
+          Speed is not the differentiator, control is. This app keeps the rules that matter in one readable
+          Xano API layer a technical reviewer can approve before it ships.
+        </p>
+        <div class="grid">
+          <div class="card">
+            <h3>Intake validation</h3>
+            <p>A submission is checked server-side: the program is open, the deadline has not passed, and the amount is within the funding cap.</p>
+          </div>
+          <div class="card">
+            <h3>API-layer RBAC</h3>
+            <p>Applicant, reviewer, and admin. Each endpoint loads the caller and checks their role. A reviewer can only score an application assigned to them.</p>
+          </div>
+          <div class="card">
+            <h3>Versioned scoring</h3>
+            <p>A program publishes a rubric with versions. Only the active version is scored against, and the API computes the weighted total.</p>
+          </div>
+          <div class="card">
+            <h3>Audit trail</h3>
+            <p>Every state-changing action (submit, assign, score, compute, decide) is written to an append-only trail, visible on the detail screen.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>API surface</h2>
+        <p class="lead">Served under one pinned canonical, so paths are stable: <code>/api:grant/&lt;name&gt;</code>.</p>
+        <table>
+          <thead><tr><th>Verb</th><th>Path</th><th>What it enforces</th></tr></thead>
+          <tbody>
+            <tr><td class="verb">POST</td><td><code>auth/signup</code></td><td>Registers an applicant. Role is fixed to applicant server-side.</td></tr>
+            <tr><td class="verb">POST</td><td><code>auth/login</code></td><td>Verifies credentials, returns a bearer token.</td></tr>
+            <tr><td class="verb">POST</td><td><code>applications/submit</code></td><td>Applicant only. Intake validation with a clear reason on rejection.</td></tr>
+            <tr><td class="verb">GET</td><td><code>applications/queue</code></td><td>Reviewer sees only assigned, admin sees all, filter by status.</td></tr>
+            <tr><td class="verb">GET</td><td><code>applications/detail/{id}</code></td><td>One application with rubric, scores, and audit trail.</td></tr>
+            <tr><td class="verb">POST</td><td><code>applications/assign</code></td><td>Admin only. The assignee must hold the reviewer role.</td></tr>
+            <tr><td class="verb">POST</td><td><code>scores/record</code></td><td>Reviewer only, and only if assigned. Points bounded by the criterion max.</td></tr>
+            <tr><td class="verb">POST</td><td><code>applications/compute-score</code></td><td>Weighted total. Refuses until every active criterion is scored.</td></tr>
+            <tr><td class="verb">POST</td><td><code>applications/decide</code></td><td>Admin only. Fund or reject, only after a total exists.</td></tr>
+            <tr><td class="verb">GET</td><td><code>criteria/list</code></td><td>The active versioned rubric for a program.</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Plus <code>programs/list</code>, <code>users/reviewers</code>, and an idempotent <code>seed/run</code>. Thirteen endpoints in all.</p>
+      </section>
+
+      <section>
+        <h2>The screens</h2>
+        <div class="grid">
+          <div class="card"><h3>Sign in</h3><p>One-click sign in with a seeded account for each role, so the access rules are visible immediately.</p></div>
+          <div class="card"><h3>Submit</h3><p>An applicant form that shows intake validation accept or reject, with the reason.</p></div>
+          <div class="card"><h3>Review queue</h3><p>Applications scoped by role, filterable by status.</p></div>
+          <div class="card"><h3>Detail + scoring</h3><p>The rubric, per-criterion scoring, the computed weighted total, the audit trail, and the admin controls.</p></div>
+        </div>
+      </section>
+
+      <section id="use" class="use">
+        <h2>Use this template</h2>
+        <p class="lead">Paste this into your coding agent to start a new app from this template.</p>
+        <pre>Start a new XanoTS app from the template at
+https://github.com/xano-scratch/grant-review-workflow
+
+Clone it, run `npm install`, then `npx xanots login` and
+`npm run xano:deploy` to get a live backend and frontend.
+Then adapt the tables in xano/tables and the endpoints in
+xano/api to my domain, keeping the API-layer role guards
+and the audit-trail pattern.</pre>
+        <p class="lead" style="margin-top:22px">Or do it by hand:</p>
+        <pre>git clone https://github.com/xano-scratch/grant-review-workflow
+cd grant-review-workflow
+npm install
+npx xanots login
+npm run xano:deploy</pre>
+        <p class="note">
+          A live preview may be linked from the source repo. Those previews are ephemeral and expire, so
+          deploy your own with the steps above for fresh links.
+        </p>
+      </section>
+
+      <footer>
+        <div class="wrap" style="padding:0">
+          Built with <a href="https://github.com/xano-scratch">xano-scratch</a> · authored in TypeScript with @xanots/sdk · MIT licensed.
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
